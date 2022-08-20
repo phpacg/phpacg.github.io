@@ -29,6 +29,33 @@
     </entry>
     
     
+    
+    <entry>
+      <title>HEXO-Butterfly播放器页面及播放器全局添加</title>
+      <link href="/2022/Hexo-Butterfly%E6%92%AD%E6%94%BE%E5%99%A8%E9%A1%B5%E9%9D%A2%E5%8F%8A%E6%92%AD%E6%94%BE%E5%99%A8%E5%85%A8%E5%B1%80%E6%B7%BB%E5%8A%A0/"/>
+      <url>/2022/Hexo-Butterfly%E6%92%AD%E6%94%BE%E5%99%A8%E9%A1%B5%E9%9D%A2%E5%8F%8A%E6%92%AD%E6%94%BE%E5%99%A8%E5%85%A8%E5%B1%80%E6%B7%BB%E5%8A%A0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="插件的安装与配置"><a href="#插件的安装与配置" class="headerlink" title="插件的安装与配置"></a>插件的安装与配置</h1><p>普通界面播放器<br>全局吸底Aplayer模式<br>演示<br>1，普通列表模式<br>2，单曲播放<br>3，迷你模式<br>附录<br>参考链接<br>Aplayer完整配置可选参数表<br>插件的安装与配置<br>安装 hexo-tag-aplayer 这款插件。执行如下指令：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure><p>插件配置方式为修改Hexo 的配置文件中进行如下修改。就是你的Hexo根目录下的_config.yml文件。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aplayer:</span><br><span class="line">  meting: true</span><br><span class="line">  asset_inject: false</span><br></pre></td></tr></table></figure><p>开启主题配置文件中的aplayerInject如下所示</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aplayerInject:</span><br><span class="line">  enable: true</span><br><span class="line">  per_page: true</span><br></pre></td></tr></table></figure><p>主题配置文件的就是自己建立的_config.butterfly.yml文件。建议使用vscode，可以进行全局搜索。更加方便进行修改。<br>至此就已经可以使用了。下面介绍两种最常用的使用。</p><h1 id="普通界面播放器"><a href="#普通界面播放器" class="headerlink" title="普通界面播放器"></a>普通界面播放器</h1><p>以本博客为例，在博客的音乐页面（\source\music\index.md文件）添加如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% meting &quot;7422861869&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:400px&quot; &quot;preload:none&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br></pre></td></tr></table></figure><p>常用的选项如下所示:<br>server可选：netease（网易云音乐），tencent（QQ音乐），kugou（酷狗音乐），xiami（虾米音乐），baidu（百度音乐）。建议网易云<br>type可选：song（歌曲），playlist（歌单），album（专辑），search（搜索关键字），artist（歌手）。添加单曲选的歌曲，歌单选择playlist，可以自行尝试。<br>id获取示例: 打开网易云音乐，选择喜欢的歌单，在网页版打开，获取歌单list，填入即可。使用的时候将上边的ID号换为自己喜欢的歌单即可。注意歌单中不能包括VIP音乐，否则无法解析。建议单独建立一个歌单，以后有喜欢的音乐添加进去，网页也会自动同步添加。<br>lrcType设置为 -1默认显示歌词，放在fixed模式下比较合适。</p><p>基本上修改的参数以上就已经足够了。ID获取的方式如下。完整的参数表见附录，也可以去参考链接中查看。</p><p>也可以直接添加HTMI格式。<br>需要修改的参数已经给出，可以自行修改。</p><p>全局吸底Aplayer模式<br>把 aplayer代码 插入到主题配置文件的 inject.bottom 即可。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inject:</span><br><span class="line">  head:</span><br><span class="line">  bottom:</span><br><span class="line">    - &lt;div class=&quot;aplayer no-destroy&quot; data-id=&quot;7422861869&quot; data-server=&quot;netease&quot; data-type=&quot;playlist&quot; data-fixed=&quot;true&quot; data-autoplay=&quot;true&quot; data-lrcType=&quot;-1&quot;&gt; &lt;/div&gt;</span><br></pre></td></tr></table></figure><p>需要修改的参数就只有data-id、data-server、data-type、data-autoplay&#x3D;”true”、data-lrcType&#x3D;”-1”一些常用的参数，可以自行根据需要修改。</p><p>最后，如果你想切换页面时，音乐不会中断。请把主题配置文件的 pjax 设为 true即可。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pjax:</span><br><span class="line"> enable: ture</span><br><span class="line"> exclude:</span><br></pre></td></tr></table></figure><p>演示<br>1，普通列表模式<br>对应代码注意这里将 “listmaxheight:100px”列表高度调整为100，为了方便展示</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% meting &quot;7422861869&quot; &quot;netease&quot; &quot;playlist&quot; &quot;autoplay&quot; &quot;mutex:false&quot; &quot;listmaxheight:100px&quot; &quot;preload:none&quot; &quot;autoplay = false&quot; &quot;theme:#ad7a86&quot;%&#125;</span><br><span class="line">1</span><br><span class="line">&#123;% meting “7422861869” “netease” “playlist” “autoplay” “mutex:false” “listmaxheight:100px” “preload:none” “theme:#ad7a86”%&#125;</span><br></pre></td></tr></table></figure><p>2，单曲播放<br>插入单曲使用如下方式</p><div class="aplayer no-destroy" data-id="1441758494" data-server="netease" data-type="song"  data-autoplay="true" data-lrcType="-1"> </div>3，迷你模式<div class="aplayer no-destroy" data-id="1441758494" data-server="netease" data-type="song" data-mini="true" data-autoplay="true" data-lrcType="-1"> </div>]]></content>
+      
+      
+      <categories>
+          
+          <category> 博客 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> Hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
